@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+  [SerializeField] private Animator unitAnimator;
   private Vector3 targetPosition;
+
+  private void Start()
+  {
+
+  }
 
   private void Update()
   {
+
     // 単純に数値のみを使用することは非推奨。何の数値なのかを表した変数を使用するべき
     float stoppingDistance = 0.1f;
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
@@ -15,20 +22,25 @@ public class Unit : MonoBehaviour
       Vector3 moveDirection = (targetPosition - this.transform.position).normalized;
       float moveSpeed = 4f;
       transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+      float rotateSpeed = 10f;
+      transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
+      unitAnimator.SetBool("IsWalking", true);
     }
-    if (Input.GetKeyDown(KeyCode.T))
+    else
     {
-      Move(new Vector3(4, 0, 4));
+      unitAnimator.SetBool("IsWalking", false);
+    }
+
+    if (Input.GetMouseButtonDown(0))
+    {
+      // クラス名.関数名でアクセスできるらしい
+      Move(MouseWorld.GetPosition());
     }
     
   }
   private void Move(Vector3 targetPosition)
   {
-    //Debug.Log(Vector3.Distance(targetPosition, this.transform.position));
-    //if (Vector3.Distance(targetPosition, this.transform.position) > 0.1f)
-    //{
-      
-    //}
       this.targetPosition = targetPosition;
   }
 }
