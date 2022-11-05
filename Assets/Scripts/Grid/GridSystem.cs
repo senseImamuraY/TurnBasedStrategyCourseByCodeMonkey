@@ -26,7 +26,7 @@ public class GridSystem
       }
     }
 
-    this.cellSize = cellSize;
+    //this.cellSize = cellSize;
   }
 
   public Vector3 GetWorldPosition(GridPosition gridPosition)
