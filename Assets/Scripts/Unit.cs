@@ -17,13 +17,13 @@ public class Unit : MonoBehaviour
   private void Start()
   {
     gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-    LevelGrid.Instance.SetUnitAtGridPosition(gridPosition, this);
+    LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
   }
 
   private void Update()
   {
 
-    // 単純に数値のみを使用することは非推奨。何の数値なのかを表した変数を使用するべき
+    // 単純に数値のみ(マジックナンバー)を使用することは非推奨。何の数値なのかを表した変数を使用するべき
     float stoppingDistance = 0.1f;
     if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
     {
@@ -44,7 +44,8 @@ public class Unit : MonoBehaviour
     GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
     if(newGridPosition != gridPosition)
     {
-
+      LevelGrid.Instance.UnitMoveGridPosition(this, gridPosition, newGridPosition);
+      gridPosition = newGridPosition;
     }
   }
   public void Move(Vector3 targetPosition)

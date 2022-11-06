@@ -1,6 +1,7 @@
 
 using System;
 
+// IEquatableはEqualsメソッドを実装することを保障するためのインターフェース
 public struct GridPosition : IEquatable<GridPosition>
 {
   public int x;
