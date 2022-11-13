@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class GridDebugObject : MonoBehaviour
 {
-  [SerializeField] private TextMeshPro textMeshPro;
+    [SerializeField] private TextMeshPro textMeshPro;
 
-  private GridObject gridObject;
+    private GridObject gridObject;
 
-  public void SetGridObject(GridObject gridObject)
-  {
-    this.gridObject = gridObject;
-  }
+    public void SetGridObject(GridObject gridObject)
+    {
+        this.gridObject = gridObject;
+    }
 
-  private void Update()
-  {
-    //textMeshPro.text = gridObject.MatrixPosition();
-    textMeshPro.text = gridObject.ToString();
-  }
+    private void Update()
+    {
+        //textMeshPro.text = gridObject.MatrixPosition();
+        textMeshPro.text = gridObject.ToString();
+    }
 }

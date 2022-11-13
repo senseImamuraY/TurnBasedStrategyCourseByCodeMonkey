@@ -1,47 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+
 
 public class CameraController : MonoBehaviour
 {
-  private void Update()
-  {
-    Vector3 inputMoveDir = new Vector3(0, 0, 0);
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-    if(Input.GetKey(KeyCode.W))
+    private void Update()
     {
-      inputMoveDir.z = +1f;
-    }
-    if(Input.GetKey(KeyCode.S))
-    {
-      inputMoveDir.z = -1f;
-    }
-    if(Input.GetKey(KeyCode.A))
-    {
-      inputMoveDir.x = -1f;
-    }
-    if(Input.GetKey(KeyCode.D))
-    {
-      inputMoveDir.x = +1f;
-    }
+        Vector3 inputMoveDir = new Vector3(0, 0, 0);
 
-    float moveSpeed = 10f;
-    // 絶対的なワールド座標で見るのではなく、ローカル座標で方向を指定している
-    Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
-    transform.position += moveVector * moveSpeed * Time.deltaTime;
+        if(Input.GetKey(KeyCode.W))
+        {
+            inputMoveDir.z = +1f;
+        }
+        if(Input.GetKey(KeyCode.S))
+        {
+            inputMoveDir.z = -1f;
+        }
+        if(Input.GetKey(KeyCode.A))
+        {
+            inputMoveDir.x = -1f;
+        }
+        if(Input.GetKey(KeyCode.D))
+        {
+            inputMoveDir.x = +1f;
+        }
 
-    Vector3 rotationVector = new Vector3(0, 0, 0);
+        float moveSpeed = 10f;
+        // 絶対的なワールド座標で見るのではなく、ローカル座標で方向を指定している
+        Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
+        transform.position += moveVector * moveSpeed * Time.deltaTime;
 
-    if (Input.GetKey(KeyCode.Q))
-    {
-      rotationVector.y = 1f;
+        Vector3 rotationVector = new Vector3(0, 0, 0);
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotationVector.y = 1f;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            rotationVector.y = -1f;
+        }
+
+        float rotationSpeed = 100f;
+        transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
+
+        Debug.Log(Input.mouseScrollDelta);
     }
-    if (Input.GetKey(KeyCode.E))
-    {
-      rotationVector.y = -1f;
-    }
-
-    float rotationSpeed = 100f;
-    transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
-  }
 }
