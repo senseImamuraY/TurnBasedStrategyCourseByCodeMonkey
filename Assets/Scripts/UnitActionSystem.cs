@@ -32,7 +32,7 @@ public class UnitActionSystem : MonoBehaviour
             if (TryHandleUnitSelection()) return;
 
             // (instanceを使う、シングルトンを使うと)クラス名.関数名でアクセスできるらしい
-            selectedUnit.Move(MouseWorld.GetPosition());
+            selectedUnit.GetMoveAction().Move(MouseWorld.GetPosition());
         }
     }
 
