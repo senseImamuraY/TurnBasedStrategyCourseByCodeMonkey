@@ -21,8 +21,8 @@ public class GridSystem
         {
             for (int z = 0; z < width; z++)
             {
-            GridPosition gridPosition = new GridPosition(x, z);
-            gridObjectArray[x, z] = new GridObject(this, gridPosition);
+                GridPosition gridPosition = new GridPosition(x, z);
+                gridObjectArray[x, z] = new GridObject(this, gridPosition);
             }
         }
     }
@@ -65,5 +65,15 @@ public class GridSystem
                gridPosition.z >= 0 &&
                gridPosition.x < width &&
                gridPosition.z < height;
+    }
+
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
     }
 }

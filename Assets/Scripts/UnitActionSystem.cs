@@ -13,6 +13,7 @@ public class UnitActionSystem : MonoBehaviour
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
 
+    private bool isBusy;
     private void Awake()
     {
         if (Instance != null)
@@ -27,13 +28,40 @@ public class UnitActionSystem : MonoBehaviour
     private void Update()
     {
 
+        if (isBusy)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (TryHandleUnitSelection()) return;
 
-            // (instanceを使う、シングルトンを使うと)クラス名.関数名でアクセスできるらしい
-            selectedUnit.GetMoveAction().Move(MouseWorld.GetPosition());
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+            if(selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+            {
+                SetBusy();
+                // (instanceを使う、シングルトンを使うと)クラス名.関数名でアクセスできるらしい
+                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            }
+
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            SetBusy();
+            selectedUnit.GetSpinAction().Spin(ClearBusy);
+        }
+    }
+
+    private void SetBusy()
+    {
+        isBusy = true;
+    }
+    private void ClearBusy()
+    {
+        isBusy = false;
     }
 
     private bool TryHandleUnitSelection()
@@ -43,8 +71,8 @@ public class UnitActionSystem : MonoBehaviour
         {
             if(raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
             {
-            SetSelectedUnit(unit);
-            return true;
+                SetSelectedUnit(unit);
+                return true;
             }
         }
         return false;
