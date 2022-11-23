@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class UnitActionSystem : MonoBehaviour
@@ -9,10 +10,13 @@ public class UnitActionSystem : MonoBehaviour
     // private set で読み込み専用にする　setが使えなくなる
     public static UnitActionSystem Instance { get; private set; }
     public event EventHandler OnSelectedUnitChanged;
+    public event EventHandler OnSelectedActionChanged;
+
 
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
 
+    private BaseAction selectedAction;
     private bool isBusy;
     private void Awake()
     {
@@ -25,6 +29,11 @@ public class UnitActionSystem : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        SetSelectedUnit(selectedUnit);
+    }
+
     private void Update()
     {
 
@@ -32,29 +41,37 @@ public class UnitActionSystem : MonoBehaviour
         {
             return;
         }
+        // ポインターがUIの上にあるかどうかをチェック（IsPointerOverGameObject）
+        // ボタンと地面がかぶってたら移動しない
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
 
+        if (TryHandleUnitSelection())
+        {
+            return;
+        }
+        
+        HandleSelectedAction();
+    }
+
+    private void HandleSelectedAction()
+    {
         if (Input.GetMouseButtonDown(0))
         {
-            if (TryHandleUnitSelection()) return;
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
-            if(selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+            if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
                 SetBusy();
-                // (instanceを使う、シングルトンを使うと)クラス名.関数名でアクセスできるらしい
-                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+                selectedAction.TakeAction(mouseGridPosition, ClearBusy);
             }
 
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            SetBusy();
-            selectedUnit.GetSpinAction().Spin(ClearBusy);
-        }
     }
-
+    
     private void SetBusy()
     {
         isBusy = true;
@@ -66,30 +83,49 @@ public class UnitActionSystem : MonoBehaviour
 
     private bool TryHandleUnitSelection()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, this.unitLayerMask))
+        if (Input.GetMouseButtonDown(0))
         {
-            if(raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, this.unitLayerMask))
             {
-                SetSelectedUnit(unit);
-                return true;
+                if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
+                {
+                    if (unit == selectedUnit)
+                    {
+                        // Unit is already selected
+                        return false;
+                    }
+                    SetSelectedUnit(unit);
+                    return true;
+                }
             }
         }
+
         return false;
     }
 
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;
+        SetSelectedAction(unit.GetMoveAction());
         // EventArgs.Emptyは引数なしを表す
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
-        Debug.Log(selectedUnit);
     }
 
+    public void SetSelectedAction(BaseAction baseAction)
+    {
+        selectedAction = baseAction;
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+    }
 
     public Unit GetSelectedUnit()
     {
         // 読み込みだけ許可した
         return selectedUnit;
+    }
+
+    public BaseAction GetSelectedAction()
+    {
+        return selectedAction;
     }
 }

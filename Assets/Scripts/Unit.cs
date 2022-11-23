@@ -10,12 +10,15 @@ public class Unit : MonoBehaviour
     private GridPosition gridPosition;
     private MoveAction moveAction;
     private SpinAction spinAction;
+    private BaseAction[] baseActionArray;
 
 
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
+        // baseアクションの数を代入.自身にくっついている派生クラスのコンポーネントまですべて取ってくる
+        baseActionArray = GetComponents<BaseAction>();
     }
 
     private void Start()
@@ -46,10 +49,14 @@ public class Unit : MonoBehaviour
         return spinAction;
     }
 
-    public GridPosition GetGridPositon()
+    public GridPosition GetGridPosition()
     {
         return gridPosition;
     }
 
-
+    public BaseAction[] GetBaseActionArray()
+    {
+        
+        return baseActionArray;
+    }
 }

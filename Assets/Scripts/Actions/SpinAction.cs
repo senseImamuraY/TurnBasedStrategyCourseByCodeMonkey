@@ -11,6 +11,7 @@ public class SpinAction : BaseAction
     private float totalSpinAmount;
     // Action はデリゲートの書き方を簡易化しているだけ
     // デリゲートは何かの処理が終わったときに、自分以外のクラスから関数を呼び出したいときにつかう（例）
+    // また、依存関係の逆転としてもつかう
     //private Action onSpinComplete;
 
     //private SpinCompleteDelegate onSpinComplete;
@@ -32,10 +33,30 @@ public class SpinAction : BaseAction
             onActionComplete();
         }
     }
-    public void Spin(Action onActionComplete)
+
+
+    public override void TakeAction(GridPosition gridPositon, Action onActionComplete)
     {
         this.onActionComplete = onActionComplete;
         isActive = true;
         totalSpinAmount = 0f;
+    }
+
+
+
+    public override string GetActionName()
+    {
+        return "Spin";
+    }
+
+    public override List<GridPosition> GetValidActionGridPositionList()
+    {
+        //List<GridPosition> validGridPositionList = new List<GridPosition>();
+        GridPosition unitGridPosition = unit.GetGridPosition();
+
+        return new List<GridPosition>
+        {
+            unitGridPosition
+        };
     }
 }
