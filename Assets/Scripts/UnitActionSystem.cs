@@ -9,9 +9,11 @@ public class UnitActionSystem : MonoBehaviour
 {
     // private set で読み込み専用にする　setが使えなくなる
     public static UnitActionSystem Instance { get; private set; }
+    // EventHandlerにデリゲートを渡すと、そのイベントが発生した時に、デリゲートで渡した処理がが勝手に走ってくれる
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
     public event EventHandler<bool> OnBusyChanged;
+    public event EventHandler OnActionStarted;
 
 
     [SerializeField] private Unit selectedUnit;
@@ -68,10 +70,14 @@ public class UnitActionSystem : MonoBehaviour
 
             if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
-                SetBusy();
-                selectedAction.TakeAction(mouseGridPosition, ClearBusy);
-            }
+                if (selectedUnit.TrySpendActionPointsToTakeAction(selectedAction))
+                {
+                    SetBusy();
+                    selectedAction.TakeAction(mouseGridPosition, ClearBusy);
 
+                    OnActionStarted?.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
     }
     

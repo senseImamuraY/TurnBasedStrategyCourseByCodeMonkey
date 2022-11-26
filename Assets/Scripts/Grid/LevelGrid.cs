@@ -10,7 +10,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private Transform gridDebugObjectPrefab;
     private GridSystem gridSystem;
 
-    private GridSystemVisualSingle gsvs;
+    //private GridSystemVisualSingle gsvs;
 
     private void Awake()
     {
