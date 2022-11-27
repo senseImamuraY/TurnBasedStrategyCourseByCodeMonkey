@@ -46,6 +46,11 @@ public class UnitActionSystem : MonoBehaviour
             return;
         }
 
+        if (!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
+
         // ポインターがUIの上にあるかどうかをチェック（IsPointerOverGameObject）
         // ボタンと地面がかぶってたら移動しない
         if (EventSystem.current.IsPointerOverGameObject())
@@ -109,6 +114,13 @@ public class UnitActionSystem : MonoBehaviour
                         // Unit is already selected
                         return false;
                     }
+
+                    if (unit.IsEnemy())
+                    {
+                        // Clicked on an Enemy
+                        return false;
+                    }
+
                     SetSelectedUnit(unit);
                     return true;
                 }
