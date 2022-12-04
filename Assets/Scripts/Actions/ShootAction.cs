@@ -21,6 +21,8 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     private bool canShootBullet;
 
+    public event EventHandler OnShoot;
+
     //private bool isRotateFinished;
     private void Update()
     {
@@ -35,7 +37,7 @@ public class ShootAction : BaseAction
         switch (state)
         {
             case State.Aiming:
-                Vector3 aimDir = targetUnit.GetWorldPosition() - unit.GetWorldPosition().normalized;
+                Vector3 aimDir = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
                 //if(!isRotateFinished)
                 //{
                 //    RotateAction(targetUnit);
@@ -75,8 +77,7 @@ public class ShootAction : BaseAction
                 stateTimer = CooloffStateTime;
                 break;
             case State.Cooloff:
-                isActive = false;
-                onActionComplete();
+                ActionComplete();
                 break;
         }
 
@@ -84,6 +85,7 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
+        OnShoot?.Invoke(this, EventArgs.Empty);
         targetUnit.Damage();
     }
 
@@ -109,6 +111,11 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > maxShootDistance)
+                {
+                    continue;
+                }
 
                 if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                 {
@@ -133,8 +140,7 @@ public class ShootAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
 
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 

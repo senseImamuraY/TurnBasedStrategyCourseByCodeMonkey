@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 6490616812446045180}
   - component: {fileID: -18421477166080620}
   - component: {fileID: 5020986207103361443}
+  - component: {fileID: 2063379786389922206}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -173,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315dccb1347cf4c4d8ba911751dc78d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAnimator: {fileID: 7892773791181290234}
   maxMoveDistance: 4
 --- !u!114 &-18421477166080620
 MonoBehaviour:
@@ -199,6 +199,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4ecf79476e94c49a32f84d89997019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2063379786389922206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844300983514088425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2dd5f66c79f694396e19afabbbcfe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7892773791181290234}
+  bulletProjectilePrefab: {fileID: 2958754609790943435, guid: 19912cce7df49fb419e7feb7ffa5192a,
+    type: 3}
+  shootPointTransform: {fileID: 8496118507860872423}
+--- !u!1 &8144100369146646352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8496118507860872423}
+  m_Layer: 7
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8496118507860872423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8144100369146646352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.014, y: 0.088, z: 0.768}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7839892748083970541}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7844300984778248833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -304,6 +351,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 25af05085d2957e42ac6b80b69ddd26a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c25ac4fdc903e7d49a7520930673ecd6, type: 3}
+--- !u!4 &7839892748083970541 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4620998167008108, guid: c25ac4fdc903e7d49a7520930673ecd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7844300984778248833}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7844300985316332706
 PrefabInstance:
   m_ObjectHideFlags: 0
