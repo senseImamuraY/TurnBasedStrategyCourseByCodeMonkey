@@ -33,7 +33,7 @@ public class UnitAnimator : MonoBehaviour
         animator.SetBool("IsWalking", false);
     }
 
-    private void ShootAction_OnShoot(object sender, EventArgs e)
+    private void ShootAction_OnShoot(object sender, ShootAction.OnShootEventArgs e)
     {
         animator.SetTrigger("Shoot");
 
@@ -41,7 +41,12 @@ public class UnitAnimator : MonoBehaviour
             Instantiate(bulletProjectilePrefab, shootPointTransform.position, Quaternion.identity);
         BulletProjectile bulletProjectile = bulletProjectileTransform.GetComponent<BulletProjectile>();
 
-        //bulletProjectile.Setup();
+        Vector3 targetUnitShootAtPosition = e.targetUnit.GetWorldPosition();
+
+        targetUnitShootAtPosition.y = shootPointTransform.position.y;
+
+
+        bulletProjectile.Setup(targetUnitShootAtPosition);
     }
 
 }
