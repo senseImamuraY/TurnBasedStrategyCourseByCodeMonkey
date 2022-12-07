@@ -7,6 +7,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3783280518890059576, guid: 8df02a631c4c93c438d83fc8ada44594,
+        type: 3}
+      propertyPath: ragdollPrefab
+      value: 
+      objectReference: {fileID: 9205765955636826360, guid: 117dda3326ae5484680566d81196857e,
+        type: 3}
     - target: {fileID: 7844300983514088423, guid: 8df02a631c4c93c438d83fc8ada44594,
         type: 3}
       propertyPath: m_RootOrder
