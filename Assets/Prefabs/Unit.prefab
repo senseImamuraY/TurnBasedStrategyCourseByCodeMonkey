@@ -229,7 +229,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.03}
+  m_AnchoredPosition: {x: -0.065, y: 2.03}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2950105082338808002
@@ -307,6 +307,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionPointsText: {fileID: 318764651230429301}
   unit: {fileID: 7844300983514088424}
+  healthBarImage: {fileID: 1975785157686606035}
+  healthSystem: {fileID: -8980784537948297046}
 --- !u!114 &1232171016464453855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.74, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5614980156294098557
