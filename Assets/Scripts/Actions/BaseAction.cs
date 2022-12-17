@@ -8,6 +8,9 @@ using UnityEngine;
 // さらに特定のクラス（ここではBaseAction）のインスタンスを作成できない
 public abstract class BaseAction : MonoBehaviour
 {
+
+    public static event EventHandler OnAnyActionStarted;
+
     protected Unit unit;
     protected bool isActive;
     protected Action onActionComplete;
@@ -40,6 +43,8 @@ public abstract class BaseAction : MonoBehaviour
     {
         isActive = true;
         this.onActionComplete = onActionComplete;
+
+        OnAnyActionStarted?.Invoke(this, EventArgs.Empty);
     }
 
     protected void ActionComplete()
