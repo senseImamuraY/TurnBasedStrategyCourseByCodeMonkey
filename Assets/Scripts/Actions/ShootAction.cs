@@ -167,6 +167,11 @@ public class ShootAction : BaseAction
 
     }
 
+    public Unit GetTargetUnit()
+    {
+        return targetUnit;
+    }
+
     //public void RotateAction(Unit targetUnit)
     //{
     //    Vector3 moveDirection = (targetUnit.transform.position - this.transform.position).normalized;
