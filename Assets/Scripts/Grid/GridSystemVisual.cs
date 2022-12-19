@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GridSystemVisual : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class GridSystemVisual : MonoBehaviour
 
             }
         }
+
+        UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition += LevelGrid_OnAnyUnitMovedGridPosition;
     }
 
     private void Update()
@@ -76,5 +80,15 @@ public class GridSystemVisual : MonoBehaviour
         ShowGridPositionList(
             selectedAction.GetValidActionGridPositionList());
         
+    }
+
+    private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
+    {
+        UpdateGridVisual();
+    }
+
+    private void LevelGrid_OnAnyUnitMovedGridPosition(object sender, EventArgs e)
+    {
+        UpdateGridVisual();
     }
 } 
