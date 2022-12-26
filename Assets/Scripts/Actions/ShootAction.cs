@@ -172,6 +172,11 @@ public class ShootAction : BaseAction
         return targetUnit;
     }
 
+    public int GetMaxShootDistance()
+    {
+        return maxShootDistance;
+    }
+
     //public void RotateAction(Unit targetUnit)
     //{
     //    Vector3 moveDirection = (targetUnit.transform.position - this.transform.position).normalized;
