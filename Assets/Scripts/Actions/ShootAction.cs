@@ -109,9 +109,15 @@ public class ShootAction : BaseAction
 
     public override List<GridPosition> GetValidActionGridPositionList()
     {
+        GridPosition unitGridPosition = unit.GetGridPosition();
+        return GetValidActionGridPositionList(unitGridPosition);
+    }
+
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition unitGridPosition)
+    {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        GridPosition unitGridPosition = unit.GetGridPosition();
+        //GridPosition unitGridPosition = unit.GetGridPosition();
 
         for (int x = -maxShootDistance; x <= maxShootDistance; x++)
         {
@@ -177,21 +183,20 @@ public class ShootAction : BaseAction
         return maxShootDistance;
     }
 
-    //public void RotateAction(Unit targetUnit)
-    //{
-    //    Vector3 moveDirection = (targetUnit.transform.position - this.transform.position).normalized;
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
+    {
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
-    //    float rotateSpeed = 10f;
-    //    transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
+        return new EnemyAIAction
+        {
+            gridPosition = gridPosition,
+            actionValue = 100 + Mathf.RoundToInt(( 1 - targetUnit.GetHealthNormalized()) * 100f),
+        };
+    }
 
-    //    if (stateTimer <= 0f)
-    //    {
-    //        isRotateFinished = true;
-    //    }
-    //    else
-    //    {
-    //        isRotateFinished = false;
-    //    }
-    //}
+    public int GetTargetCountAtPosition(GridPosition gridPosition)
+    {
+        return GetValidActionGridPositionList(gridPosition).Count;
+    }
 
 }

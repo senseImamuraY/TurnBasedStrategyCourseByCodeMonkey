@@ -19,7 +19,7 @@ public class TurnSystemUI : MonoBehaviour
         endTurnBtn.onClick.AddListener(() =>
         {
             //SetTrunNumber();
-            TurnSystem.Instance.NextTrun();
+            TurnSystem.Instance.NextTurn();
         });
 
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;

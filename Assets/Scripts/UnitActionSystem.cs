@@ -9,6 +9,7 @@ public class UnitActionSystem : MonoBehaviour
 {
     // private set で読み込み専用にする　setが使えなくなる
     public static UnitActionSystem Instance { get; private set; }
+
     // EventHandlerにデリゲートを渡すと、そのイベントが発生した時に、デリゲートで渡した処理がが勝手に走ってくれる
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
@@ -133,7 +134,7 @@ public class UnitActionSystem : MonoBehaviour
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;
-        SetSelectedAction(unit.GetMoveAction());
+        SetSelectedAction(unit.GetAction<MoveAction>());
         // EventArgs.Emptyは引数なしを表す
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }

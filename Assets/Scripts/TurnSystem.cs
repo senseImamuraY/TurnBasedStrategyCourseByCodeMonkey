@@ -24,7 +24,7 @@ public class TurnSystem : MonoBehaviour
 
     private int turnNumber = 1;
 
-    public void NextTrun()
+    public void NextTurn()
     {
         turnNumber++;
         isPlayerTurn = !isPlayerTurn;
