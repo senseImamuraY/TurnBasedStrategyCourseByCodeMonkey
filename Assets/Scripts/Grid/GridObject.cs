@@ -11,7 +11,6 @@ public class GridObject
 
     public GridObject(GridSystem<GridObject> gridSystem, GridPosition gridPosition)
     {
-    
         this.gridSystem = gridSystem;
         this.gridPosition = gridPosition;
         unitList = new List<Unit>();
