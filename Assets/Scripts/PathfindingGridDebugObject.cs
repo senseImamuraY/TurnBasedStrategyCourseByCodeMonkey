@@ -18,7 +18,7 @@ public class PathfindingGridDebugObject : GridDebugObject
         pathNode = (PathNode)gridObject;
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
         base.Update();
         gCostText.text = pathNode.GetGCost().ToString();
