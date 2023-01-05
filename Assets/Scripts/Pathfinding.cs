@@ -19,4 +19,10 @@ public class Pathfinding : MonoBehaviour
         gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
 
     }
+
+    public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition)
+    {
+        List<PathNode> openList = new List<PathNode>();
+        List<PathNode> closeList = new List<PathNode>();
+    }
 }

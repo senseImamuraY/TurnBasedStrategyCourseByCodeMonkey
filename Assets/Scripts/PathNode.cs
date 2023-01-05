@@ -35,4 +35,14 @@ public class PathNode
     {
         return fCost;
     }
+
+    public void SetGCost(int gCost)
+    {
+        this.gCost = gCost;
+    }
+    public void SetHCost(int hCost)
+    {
+        this.hCost = hCost;
+    }
+    
 }
