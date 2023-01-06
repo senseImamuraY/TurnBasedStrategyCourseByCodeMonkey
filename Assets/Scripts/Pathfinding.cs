@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
@@ -62,14 +63,38 @@ public class Pathfinding : MonoBehaviour
 
             openList.Remove(currentNode);
             closedList.Add(currentNode);
+
+            foreach (PathNode neighbourNode in GetNeighbourList(currentNode))
+            {
+                if (closedList.Contains(neighbourNode))
+                {
+                    continue;
+                }
+
+                int tentativeGCost = 
+                    currentNode.GetGCost() + CalculateDistance(currentNode.GetGridPosition(), neighbourNode.GetGridPosition());
+
+                if (tentativeGCost < neighbourNode.GetGCost())
+                {
+                    
+                }
+            }
         }
     }
 
+    /// <summary>
+    /// äÓñ{ÇÕëŒäpê¸Ç≈ìÆÇ¢ÇƒÅAÇªÇÃå„Ç…ècâ°à⁄ìÆÇ∑ÇÈÅB
+    /// </summary>
+    /// <param name="gridPositionA"></param>
+    /// <param name="gridPositionB"></param>
+    /// <returns></returns>
     public int CalculateDistance(GridPosition gridPositionA ,GridPosition gridPositionB)
     {
-        GridPosition gridPositinoDistance = gridPositionA - gridPositionB;
-        int distance = Mathf.Abs(gridPositinoDistance.x) + Mathf.Abs(gridPositinoDistance.z);
-        return distance * MOVE_STRAIGHT_COST;
+        GridPosition gridPositionDistance = gridPositionA - gridPositionB;
+        int xDistance = Mathf.Abs(gridPositionDistance.x);
+        int zDistance = Mathf.Abs(gridPositionDistance.z);
+        int remaining = Mathf.Abs(xDistance - zDistance);
+        return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, zDistance) + MOVE_STRAIGHT_COST * remaining;
     }
 
     private PathNode GetLowestFCostPathNode(List<PathNode> pathNodeList)

@@ -56,6 +56,11 @@ public class PathNode
         cameFromPathNode = null;
     }
 
+    public void SetCameFromPathNode(PathNode pathNode)
+    {
+        cameFromPathNode = pathNode;
+    }
+
     public GridPosition GetGridPosition()
     {
         return gridPosition;
