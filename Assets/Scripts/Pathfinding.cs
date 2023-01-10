@@ -76,10 +76,21 @@ public class Pathfinding : MonoBehaviour
 
                 if (tentativeGCost < neighbourNode.GetGCost())
                 {
-                    
+                    neighbourNode.SetCameFromPathNode(currentNode);
+                    neighbourNode.SetGCost(tentativeGCost);
+                    neighbourNode.SetHCost(CalculateDistance(neighbourNode.GetGridPosition(), endGridPosition));
+                    neighbourNode.CalculateFCost();
+
+                    if (!openList.Contains(neighbourNode))
+                    {
+                        openList.Add(neighbourNode);
+                    }
                 }
             }
         }
+
+        // No path found
+        return null;
     }
 
     /// <summary>
@@ -170,6 +181,28 @@ public class Pathfinding : MonoBehaviour
         }
 
         return neighbourList;
+    }
+
+    private List<GridPosition> CalculatePath(PathNode endNode)
+    {
+        List<PathNode> pathNodeList = new List<PathNode>();
+        pathNodeList.Add(endNode);
+        PathNode currentNode = endNode;
+        while (currentNode.GetCameFromPathNode() != null)
+        {
+            pathNodeList.Add(currentNode.GetCameFromPathNode());
+            currentNode = currentNode.GetCameFromPathNode();
+        }
+
+        pathNodeList.Reverse();
+
+        List<GridPosition> gridPositionList = new List<GridPosition>();
+        foreach (PathNode pathNode in pathNodeList)
+        {
+            gridPositionList.Add(pathNode.GetGridPosition());
+        }
+
+        return gridPositionList;
     }
 
 }

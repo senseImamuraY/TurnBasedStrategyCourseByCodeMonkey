@@ -60,6 +60,10 @@ public class PathNode
     {
         cameFromPathNode = pathNode;
     }
+    public PathNode GetCameFromPathNode()
+    {
+        return cameFromPathNode;
+    }
 
     public GridPosition GetGridPosition()
     {
