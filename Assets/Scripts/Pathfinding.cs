@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
+    public static Pathfinding Instance { get; private set; }
 
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
@@ -18,6 +19,15 @@ public class Pathfinding : MonoBehaviour
 
     private void Awake()
     {
+        
+        if (Instance != null)
+        {
+            Debug.LogError("There`s more than one Pathfinding!" + transform + " - " + Instance);
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         gridSystem = new GridSystem<PathNode>(10, 10, 2f,
             (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
         gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
