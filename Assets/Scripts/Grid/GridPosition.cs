@@ -1,4 +1,3 @@
-
 using System;
 
 // IEquatableはEqualsメソッドを実装することを保障するためのインターフェース
