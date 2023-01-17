@@ -28,9 +28,18 @@ public class Pathfinding : MonoBehaviour
         }
         Instance = this;
 
-        gridSystem = new GridSystem<PathNode>(10, 10, 2f,
+    }
+
+    public void Setup(int width, int height, float cellSize)
+    {
+        this.width = width;
+        this.height = height;
+        this.cellSize = cellSize;
+
+        gridSystem = new GridSystem<PathNode>(width, height, cellSize,
             (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
         gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
+
 
     }
 
@@ -78,6 +87,12 @@ public class Pathfinding : MonoBehaviour
             {
                 if (closedList.Contains(neighbourNode))
                 {
+                    continue;
+                }
+
+                if (!neighbourNode.IsWalkable())
+                {
+                    closedList.Add(neighbourNode);
                     continue;
                 }
 
